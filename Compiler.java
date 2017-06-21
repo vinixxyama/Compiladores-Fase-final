@@ -36,29 +36,51 @@ public class Compiler {
         }else{
           error.signal("Falta o nome do programa");
         }
-        //’:’ Body ’E’
-        if(lexer.token == Symbol.COLON){
-          lexer.nextToken();
-          while(lexer.token != Symbol.END){
-            if(lexer.token == Symbol.INT || lexer.token == Symbol.FLOAT || lexer.token == Symbol.STRING || lexer.token == Symbol.BOOLEAN){
-              while(lexer.token != Symbol.SEMICOLON){
-                if(lexer.token == Symbol.INT || lexer.token == Symbol.FLOAT || lexer.token == Symbol.STRING || lexer.token == Symbol.BOOLEAN){
-                  decl.add(declaration());
-                }
-              }
-              lexer.nextToken();
-            }
-            if(lexer.token == Symbol.IDENT || lexer.token == Symbol.IF || lexer.token == Symbol.WHILE || lexer.token == Symbol.BREAK || lexer.token == Symbol.PRINT || lexer.token == Symbol.FOR){
-              st.add(stmt());
-            }
-
-          }
+        if(lexer.token == Symbol.DEF){
+          funcdef();
         }
       }
       if(lexer.token == Symbol.END){
         lexer.nextToken();
       }
     return new Program(decl, st);
+    }
+
+    private FuncDef funcdef(){
+      String funcnome = null;
+      lexer.nextToken();
+      if(lexer.token == Symbol.IDENT){
+        funcnome = name();
+      }
+      if(lexer.token == Symbol.LEFTPAR){
+        lexer.nextToken();
+        if(lexer.token == Symbol.INT || lexer.token == Symbol.FLOAT || lexer.token == Symbol.STRING || lexer.token == Symbol.BOOLEAN || lexer.token == Symbol.VOID){
+          argslist();
+        }
+      }
+      //’:’ Body ’E’
+      if(lexer.token == Symbol.COLON){
+        lexer.nextToken();
+        while(lexer.token != Symbol.END){
+          if(lexer.token == Symbol.INT || lexer.token == Symbol.FLOAT || lexer.token == Symbol.STRING || lexer.token == Symbol.BOOLEAN){
+            while(lexer.token != Symbol.SEMICOLON){
+              if(lexer.token == Symbol.INT || lexer.token == Symbol.FLOAT || lexer.token == Symbol.STRING || lexer.token == Symbol.BOOLEAN){
+                decl.add(declaration());
+              }
+            }
+            lexer.nextToken();
+          }
+          if(lexer.token == Symbol.IDENT || lexer.token == Symbol.IF || lexer.token == Symbol.WHILE || lexer.token == Symbol.BREAK || lexer.token == Symbol.PRINT || lexer.token == Symbol.FOR){
+            st.add(stmt());
+          }
+        }
+      }
+    }
+
+    private ArgsList argslist(){
+      Strng tipofunc = null;
+      tipofunc = type();
+      
     }
 
     private Declaration declaration(){

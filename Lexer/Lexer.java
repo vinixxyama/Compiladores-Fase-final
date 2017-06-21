@@ -41,6 +41,7 @@ public class Lexer {
         
       //adicionadas novas palavras chaves 
       keywordsTable.put( "void", Symbol.VOID );
+      keywordsTable.put( "def", Symbol.DEF );
       keywordsTable.put( "program", Symbol.PROGRAM );
       keywordsTable.put( "main", Symbol.MAIN );
       keywordsTable.put( "int", Symbol.INT);
