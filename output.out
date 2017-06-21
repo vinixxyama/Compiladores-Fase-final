@@ -1,0 +1,126 @@
+erroLexico1.in, 5, Palavra inexistente na linguagem
+long x;
+erroLexico2.in, 5, Numero fora dos limites
+print 1000000000000000000;
+erroLexico3.in, 6, Simbolo invalido
+boolean ab@_10;
+erroLexico4.in, 5, Simbolo invalido
+int abcd-efgh;
+erroLexico5.in, 7, Numero invalido
+a = 1.o;
+erroLexico6.in, 7, Numero fora dos limites
+a = 7000000000000000000;
+erroLexico7.in, 9, Operador invalido
+if a != b{
+erroLexico8.in, 7, Operador invalido
+a += 2 - 1;
+erroLexico9.in, 9, Operador invalido
+if a <<= b{
+erroSemantico1.in, 5, Uso de variavel nao declarada
+a = 1;
+erroSemantico2.in, 5, Redeclaracao de variavel
+int a, a[10];
+erroSemantico3.in, 5, Vetor com tamanho negativo
+string tamanho[-10];
+erroSemantico4.in, 7, Atribuicao com tipo incorreto
+b = 12.35;
+erroSemantico5.in, 8, Atribuicao de tipos incompativeis
+var = vet;
+erroSemantico6.in, 6, Redeclaracao de variavel
+string a;
+erroSemantico7.in, 7, Variavel nao declarada (linguagem case sensitive)
+Numero = 21;
+erroSemantico8.in, 9, Comparacao entre array e int
+if alist == i {
+erroSemantico9.in, 5, Emprego de palavra reservada
+string int;
+erroSemantico10.in, 9, Break fora de loop
+break;
+erroSemantico11.in, 8, Operador not aplicado a string
+if not text {
+erroSemantico12.in, 5, Vetor com tamanho real
+int value[10.213];
+erroSemantico13.in, 7, Array com excesso de elementos
+alist = [20,30,40,90,50,60,70,80,100,110];
+erroSemantico14.in, 9, Posicao invalida do vetor
+print alist[7];
+erroSemantico16.in, 7, Atribuicao com tipo incorreto
+b = True;
+erroSemantico17.in, 7, Variavel nao e vetor
+print a[1];
+erroSemantico18.in, 7, Atribuicao de tipo invalido
+a = True or False;
+erroSemantico19.in, 8, variavel a redeclarada mas nao em sequencia
+int a;
+erroSemantico20.in, 7, operador aritmetico aplicado a tipo booleano
+a = True + False;
+erroSemantico21.in, 5, Erro de tipos
+return 13.2;
+erroSemantico22.in, 8, Funcoes com mesmo nome
+def same():void{
+erroSemantico23.in, 5, Funcao void deve ter retorno vazio
+return 2;
+erroSemantico24.in, 11, Atribuicao entre tipos distintos
+x = a();
+erroSemantico25.in, 15, Operacao entre tipos distintos
+x = a() + b();
+erroSemantico26.in, 18, Erro entre tipos, funcao espera int, string, mas recebe string, int
+x = a(x2, x1);
+erroSemantico27.in, 4, Metodo com mesmo nome que variavel
+def a():int{
+erroSemantico28.in, 8, Funcao main ausente
+end
+erroSemantico29.in, 9, Chamada a metodo inexistente
+aa();
+erroSemantico30.in, 9, Chamada de metodo com numero incorreto de parametros
+a(2,3);
+erroSemantico31.in, 4, Metodo main nao pode ser boolean
+def main():boolean {
+erroSemantico32.in, 5, Contrucao proibida
+’sou string’(1,2);
+erroSintatico1.in, 5, Falta fechar aspas no print
+print 'Hello, world!;
+erroSintatico2.in, 5, Falta ; na declaracao
+int a
+erroSintatico3.in, 2, Falta o nome do programa
+program :
+erroSintatico4.in, 8, Falta abre chaves no if
+if x < 0 
+erroSintatico5.in, 11, Falta valor depois de <=
+while babies <=  {
+erroSintatico6.in, 11, Falta valor no inrange
+for var1 inrange(5, ) {
+erroSintatico7.in, 15, Falta operador de comparacao
+if guess num {
+erroSintatico8.in, 9, Falta , no vetor
+alist = [20 30,40,90,50,60,70,80,100,110];
+erroSintatico10.in, 11, Falta operador 
+t = a  b;
+erroSintatico11.in, 13, Falta comando
+x == 0 {
+erroSintatico12.in, 9, Falta valor depois de =
+a = ;
+erroSintatico13.in, 16, else sem if
+else {
+erroSintatico14.in, 17, Falta comparador
+if var2 == 2 var2 > 5 {
+erroSintatico15.in, 44, Falta um fecha chaves
+return ;
+erroSintatico16.in, 4, Falta :
+def a()int{
+erroSintatico17.in, 4, Falta o tipo da funcao
+def a():{
+erroSintatico18.in, 4, Falta o nome da funcao
+def ():int{
+erroSintatico19.in, 4, Falta def
+a():int{
+erroSintatico20.in, 5, Retorno invalido
+return 0,1,2;
+erroSintatico21.in, 9, Chamada invalida de funcao
+a;
+erroSintatico22.in, 4, Falta nome do parametro
+def a(int ):int{
+erroSintatico23.in, 4, Falta , entre parametros
+def a(int a int b):int{
+erroSintatico24.in, 4, Permitido somente um tipo de retorno
+def a():int float{
