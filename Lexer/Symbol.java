@@ -40,7 +40,7 @@ public enum Symbol {
       COLON(":"),
       ALVEOLAR("!"),
       VOID("void"),
-      DEF("def");
+      DEF("def"),
       MAIN("main"),
       INT("int"),
       FLOAT("float"),

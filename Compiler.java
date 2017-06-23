@@ -15,7 +15,6 @@ public class Compiler {
 
     public Program compile( char []p_input, String nameFile) {
         input = p_input;
-
         //instancia a nova HashTable para variaveis 
         variableTable = new Hashtable<String, String>();
         error = new CompilerError(nameFile);
@@ -25,10 +24,9 @@ public class Compiler {
         return program();
         }
 
-    //Program ::= ’P’ Name ’:’ Body ’E’
+    //Program  ::= ’program’ Name ’:’ FuncDef {FuncDef} ’end’
     private Program program() {
-      ArrayList<Stmt> st = new ArrayList<Stmt>();
-      decl = new ArrayList<Declaration>();
+      ArrayList<FuncDef> fncdef = new ArrayList<FuncDef>();
       if (lexer.token == Symbol.PROGRAM){
         lexer.nextToken();
         if(lexer.token == Symbol.IDENT){
@@ -36,18 +34,25 @@ public class Compiler {
         }else{
           error.signal("Falta o nome do programa");
         }
-        if(lexer.token == Symbol.DEF){
-          funcdef();
+        while(lexer.token == Symbol.DEF){
+          fncdef.add(funcdef());
         }
       }
       if(lexer.token == Symbol.END){
         lexer.nextToken();
       }
-    return new Program(decl, st);
+    return new Program(fncdef);
     }
 
+    //FuncDef ::= ’def’ Name ’(’ [ArgsList] ’)’ : Type ’{’Body’}’
     private FuncDef funcdef(){
+      ArrayList<Stmt> st = new ArrayList<Stmt>();
+      decl = new ArrayList<Declaration>();
+      FuncDef fncd = null;
+      ArrayList<ArgsList> arl2 = new ArrayList<ArgsList>();
       String funcnome = null;
+      String tipofunc = null;
+      //consome def
       lexer.nextToken();
       if(lexer.token == Symbol.IDENT){
         funcnome = name();
@@ -55,12 +60,20 @@ public class Compiler {
       if(lexer.token == Symbol.LEFTPAR){
         lexer.nextToken();
         if(lexer.token == Symbol.INT || lexer.token == Symbol.FLOAT || lexer.token == Symbol.STRING || lexer.token == Symbol.BOOLEAN || lexer.token == Symbol.VOID){
-          argslist();
+          arl2 = argslist();
+        }
+        if(lexer.token == Symbol.RIGHTPAR){
+          lexer.nextToken();
         }
       }
-      //’:’ Body ’E’
       if(lexer.token == Symbol.COLON){
         lexer.nextToken();
+      }
+      tipofunc = type();
+      if(lexer.token == Symbol.LEFTBRACES){
+        lexer.nextToken();
+
+         //Body::= [Declaration] {Stmt}
         while(lexer.token != Symbol.END){
           if(lexer.token == Symbol.INT || lexer.token == Symbol.FLOAT || lexer.token == Symbol.STRING || lexer.token == Symbol.BOOLEAN){
             while(lexer.token != Symbol.SEMICOLON){
@@ -74,13 +87,60 @@ public class Compiler {
             st.add(stmt());
           }
         }
+        if(lexer.token == Symbol.RIGHTBRACES){
+        lexer.nextToken();
+        }else{
+          //NAO FECHOU FUNÇÃO;
+        }
       }
+      fncd = new FuncDef(arl2, decl, st, funcnome, tipofunc);
+      return fncd;
     }
 
-    private ArgsList argslist(){
-      Strng tipofunc = null;
-      tipofunc = type();
-      
+    //ArgsList ::= Type NameArray {’,’ Type NameArray}
+    private ArrayList<ArgsList> argslist(){
+      ArrayList<ArgsList> arl = new ArrayList<ArgsList>();
+      ArgsList arg1 = null;
+      NameArray nay = null;
+      String tipopar = null;
+
+      tipopar = type();  
+      nay = namearray();
+      arg1 = new ArgsList(nay, tipopar);
+      arl.add(arg1);
+      while(lexer.token == Symbol.COMMA){
+        lexer.nextToken();
+        tipopar = type();  
+        nay = namearray();
+        arg1 = new ArgsList(nay,tipopar);
+        arl.add(arg1);
+      }
+      return arl;
+    }
+
+    //NameArray ::= Name[‘[’Number‘]’]
+    private NameArray namearray(){
+      NameArray nay = null;
+      Numbers aux = null;
+      String naaux = null;
+      StringBuffer ident = new StringBuffer();
+
+      naaux = name();
+      if(lexer.token == Symbol.LEFTBRACKETS){
+        ident.append(naaux);
+        ident.append("[");
+        lexer.nextToken();
+        aux = numbers();
+        ident.append(aux.getReal());
+        if(lexer.token == Symbol.RIGHTBRACKETS){
+          ident.append("]");
+        }else{
+          //FALTA FECHAR ]
+        }
+        naaux = ident.toString();
+      }
+      nay = new NameArray(naaux);
+      return nay;
     }
 
     private Declaration declaration(){

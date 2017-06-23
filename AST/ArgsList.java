@@ -5,5 +5,15 @@ package AST;
 import java.util.*;
 
 public class ArgsList{
-	
+	public ArgsList(NameArray nay, String tipopar){
+		this.nay = nay;
+		this.tipopar = tipopar;
+	}
+
+	public String gettipo(){
+		return tipopar;
+	}
+
+	private NameArray nay;
+	private String tipopar;
 }
