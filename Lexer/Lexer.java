@@ -43,7 +43,7 @@ public class Lexer {
       keywordsTable.put( "void", Symbol.VOID );
       keywordsTable.put( "def", Symbol.DEF );
       keywordsTable.put( "program", Symbol.PROGRAM );
-      keywordsTable.put( "main", Symbol.MAIN );
+      keywordsTable.put( "return", Symbol.RETURN );
       keywordsTable.put( "int", Symbol.INT);
       keywordsTable.put( "while", Symbol.WHILE );
       keywordsTable.put( "break", Symbol.BREAK );

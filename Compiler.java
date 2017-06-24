@@ -30,9 +30,13 @@ public class Compiler {
       if (lexer.token == Symbol.PROGRAM){
         lexer.nextToken();
         if(lexer.token == Symbol.IDENT){
+          System.out.print("asolasos");
           name();
         }else{
           error.signal("Falta o nome do programa");
+        }
+        if(lexer.token == Symbol.COLON){
+          lexer.nextToken();
         }
         while(lexer.token == Symbol.DEF){
           fncdef.add(funcdef());
@@ -74,7 +78,7 @@ public class Compiler {
         lexer.nextToken();
 
          //Body::= [Declaration] {Stmt}
-        while(lexer.token != Symbol.END){
+        while(lexer.token != Symbol.RIGHTBRACES){
           if(lexer.token == Symbol.INT || lexer.token == Symbol.FLOAT || lexer.token == Symbol.STRING || lexer.token == Symbol.BOOLEAN){
             while(lexer.token != Symbol.SEMICOLON){
               if(lexer.token == Symbol.INT || lexer.token == Symbol.FLOAT || lexer.token == Symbol.STRING || lexer.token == Symbol.BOOLEAN){
@@ -83,12 +87,12 @@ public class Compiler {
             }
             lexer.nextToken();
           }
-          if(lexer.token == Symbol.IDENT || lexer.token == Symbol.IF || lexer.token == Symbol.WHILE || lexer.token == Symbol.BREAK || lexer.token == Symbol.PRINT || lexer.token == Symbol.FOR){
+          if(lexer.token == Symbol.IDENT || lexer.token == Symbol.IF || lexer.token == Symbol.WHILE || lexer.token == Symbol.BREAK || lexer.token == Symbol.PRINT || lexer.token == Symbol.FOR || lexer.token == Symbol.RETURN){
             st.add(stmt());
           }
         }
         if(lexer.token == Symbol.RIGHTBRACES){
-        lexer.nextToken();
+          lexer.nextToken();
         }else{
           //NAO FECHOU FUNÇÃO;
         }
@@ -186,7 +190,7 @@ public class Compiler {
     private Stmt stmt(){
       Stmt st = null;
       char tk = ' ';
-      if(lexer.token == Symbol.BREAK || lexer.token == Symbol.PRINT || lexer.token == Symbol.IDENT){
+      if(lexer.token == Symbol.BREAK || lexer.token == Symbol.PRINT || lexer.token == Symbol.IDENT || lexer.token == Symbol.RETURN){
         tk = 'S';
         st = new Stmt(tk, simplestmt());
       }else if(lexer.token == Symbol.IF || lexer.token == Symbol.WHILE || lexer.token == Symbol.ELSE|| lexer.token == Symbol.FOR){
@@ -202,21 +206,31 @@ public class Compiler {
       char tk;
       SimpleStmt si = null;
       ArrayList<PrintStmt> pt = new ArrayList<PrintStmt>();
+      String aux = null;
       if(lexer.token == Symbol.IDENT){
-        si = new SimpleStmt(exprStmt());
-        if(lexer.token == Symbol.SEMICOLON){
-        	lexer.nextToken();
-        }else{
-        	//error
+        aux = name();
+        if(lexer.token == Symbol.LEFTBRACKETS || lexer.token == Symbol.ASSIGN){
+          si = new SimpleStmt(exprStmt(aux));
+          if(lexer.token == Symbol.SEMICOLON){
+          	lexer.nextToken();
+          }else{
+          	//error
+          }
+        }else if(lexer.token == Symbol.LEFTPAR){
+          tk = 'F';
+          si = new SimpleStmt(tk, funcstmt(aux));
         }
       }else if(lexer.token == Symbol.PRINT){
-        tk = 'R';
+        tk = 'P';
         lexer.nextToken();
         pt.add(printstm());
         si = new SimpleStmt(tk,pt);
       }else if(lexer.token == Symbol.BREAK){
         tk = 'B';
         si = new SimpleStmt(tk, breakStmt());
+      }else if(lexer.token == Symbol.RETURN){
+        tk = 'R';
+        si = new SimpleStmt(tk, returnstmt());
       }
       return si;
     }
@@ -380,7 +394,7 @@ public class Compiler {
 	      lexer.nextToken();
 	      wh = new WhileStmt(st, or);
 	      return wh;
-	}
+	  }
 
     private BreakStmt breakStmt(){
     	char tk = 'b';
@@ -395,7 +409,38 @@ public class Compiler {
       return br;
     }
 
-    private ExprStmt exprStmt(){
+    private ReturnStmt returnstmt(){
+      OrTest ort = null;
+
+      lexer.nextToken();
+      if(lexer.token == Symbol.IDENT || lexer.token == Symbol.NUMBER || lexer.token == Symbol.IBAR || lexer.token == Symbol.BOOLEAN){
+        ort = ortest();
+      }
+      if(lexer.token == Symbol.SEMICOLON){
+        lexer.nextToken();
+      }
+      return new ReturnStmt(ort);
+    }
+
+    private FuncStmt funcstmt(String varfunc){
+      OrTest ort = null;
+
+      if(lexer.token == Symbol.LEFTPAR){
+        lexer.nextToken();
+        if(lexer.token == Symbol.IDENT || lexer.token == Symbol.NUMBER || lexer.token == Symbol.IBAR || lexer.token == Symbol.BOOLEAN){
+          ort = ortest();
+        }
+        if(lexer.token == Symbol.RIGHTPAR){
+          lexer.nextToken();
+        }
+      }
+      if(lexer.token == Symbol.SEMICOLON){
+        lexer.nextToken();
+      }
+      return new FuncStmt(varfunc, ort);
+    }
+
+    private ExprStmt exprStmt(String var){
     	ExprStmt exp = null;
     	ExprStmt aux = null;
     	Numbers aux2 = null;
@@ -404,14 +449,12 @@ public class Compiler {
     	ArrayList<String> strg = new ArrayList<String>();
     	StringBuffer varia = new StringBuffer();
     	StringBuffer valor = new StringBuffer();
-    	String var = null;
     	String var2 = null;
     	String val = null;
       String tipo = null;
     	int i = 0, j = 0, w = 0, k = 0;
 
     	if(lexer.token == Symbol.IDENT){
-    		var = name();
     		varia.append(var);
     		if(lexer.token == Symbol.LEFTBRACKETS){
     			varia.append(exprList());

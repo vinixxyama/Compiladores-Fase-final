@@ -11,13 +11,19 @@ public class SimpleStmt{
 		this.tk = tk;
 	}
 
-	public SimpleStmt (char tk){
+	public SimpleStmt (char tk, ReturnStmt ret){
 		this.tk = tk;
+		this.ret = ret;
 	}
 	
 	public SimpleStmt (char tk, BreakStmt br){
 		this.tk = tk;
 		this.br = br;
+	}
+
+	public SimpleStmt (char tk, FuncStmt fncst){
+		this.tk = tk;
+		this.fncst = fncst;
 	}
 
 	public SimpleStmt (ExprStmt exstmt){
@@ -26,13 +32,17 @@ public class SimpleStmt{
 
 	public void genC(PW pw){
 		int i = 0;
-		if(tk == 'R'){
+		if(tk == 'P'){
 			while(i < printStmt.size()){
 				printStmt.get(i).genC(pw);
 				i++;
 			}
 		}else if(tk == 'B'){
 			br.genC(pw);
+		}else if(tk == 'R'){
+
+		}else if(tk == 'F'){
+
 		}else{
 			exstmt.genC(pw);
 		}
@@ -41,4 +51,6 @@ public class SimpleStmt{
 	private ExprStmt exstmt;
 	private BreakStmt br;
 	private char tk;
+	private ReturnStmt ret;
+	private FuncStmt fncst;
 }

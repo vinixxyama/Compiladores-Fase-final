@@ -7,6 +7,7 @@ package Lexer;
 public enum Symbol {
       EOF("eof"),
       IDENT("Identifier"),
+      RETURN("return"),
       NUMBER("Number"),
       PLUS("+"),
       MINUS("-"),
@@ -41,7 +42,6 @@ public enum Symbol {
       ALVEOLAR("!"),
       VOID("void"),
       DEF("def"),
-      MAIN("main"),
       INT("int"),
       FLOAT("float"),
       DOUBLE("double"),
