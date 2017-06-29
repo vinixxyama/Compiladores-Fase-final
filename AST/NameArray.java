@@ -13,5 +13,9 @@ public class NameArray{
 		return vetname;
 	}
 
+	public void genC(PW pw) {
+		pw.out.print(vetname);
+	}
+
 	private String vetname;
 }

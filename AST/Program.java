@@ -14,6 +14,16 @@ public class Program {
     }
 
     public void genC(PW pw) {
+    	int i;
+    	pw.out.println("#include <stdio.h>");
+        pw.out.println("#include <string.h>");
+        pw.out.println("");
+    	for(i=0;i<fncdef.size();i++){
+    		fncdef.get(i).genC(pw);
+            if(i != fncdef.size()-1){
+                pw.out.println("");
+            }
+    	}
     }                        
 
     private ArrayList<FuncDef> fncdef;

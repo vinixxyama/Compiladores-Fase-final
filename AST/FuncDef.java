@@ -21,6 +21,31 @@ public class FuncDef{
 		return tipofunc;
 	}
 
+	public void genC(PW pw) {
+		int i;
+		pw.out.print(tipofunc+" ");
+		pw.out.print(funcnome+"(");
+		for(i=0;i<arl2.size();i++){
+			arl2.get(i).genC(pw);
+		}
+		pw.out.println("){");
+		pw.add();
+		if(!decl.isEmpty()){
+			for(i=0;i<decl.size();i++){
+				decl.get(i).genC(pw);
+			}
+		}
+		pw.out.println("");
+		if(!st.isEmpty()){
+			for(i=0;i<st.size();i++){
+				st.get(i).genC(pw);
+			}
+		}
+		pw.out.println("}");
+		pw.sub();
+		
+	}
+
 	private ArrayList<ArgsList> arl2;
 	private ArrayList<Stmt> st;
 	private ArrayList<Declaration> decl;

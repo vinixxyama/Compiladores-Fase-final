@@ -12,15 +12,17 @@ public class WhileStmt{
 	}
 
 	public void genC(PW pw){
-		pw.out.print("while(");
+		pw.print("while(");
 		for(int i=0; i<or.size();i++){
 			or.get(i).genC(pw);
 		}
 		pw.out.println("){");
+		pw.add();
 		for(int i=0; i<st.size();i++){
 			st.get(i).genC(pw);
 		}
-		pw.out.print("\n}");
+		pw.sub();
+		pw.println("}");
 	}
 
 	private ArrayList<Stmt> st;

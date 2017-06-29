@@ -40,9 +40,9 @@ public class SimpleStmt{
 		}else if(tk == 'B'){
 			br.genC(pw);
 		}else if(tk == 'R'){
-
+			ret.genC(pw);
 		}else if(tk == 'F'){
-
+			fncst.genC(pw);
 		}else{
 			exstmt.genC(pw);
 		}

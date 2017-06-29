@@ -263,6 +263,24 @@ public class Lexer {
                       break;
                     case '\'' :
                         token = Symbol.IBAR;
+                        while(input[tokenPos] != '\''){
+                          System.out.print(input[tokenPos]);
+                          ident.append(input[tokenPos]);
+                          tokenPos++;
+                        }
+                        if(input[tokenPos] == '\''){
+                          tokenPos++;
+                        }
+                        nameVariable = ident.toString();
+                        System.out.println("UE:"+nameVariable);
+                      break;
+                    case '\\':
+                        token = Symbol.IDENT;
+                        if ( input[tokenPos] == 'n' || input[tokenPos] == 't') {
+                          ident.append(input[tokenPos]);
+                          tokenPos++;
+                          nameVariable = ident.toString();
+                        }
 
                       break;
                 }

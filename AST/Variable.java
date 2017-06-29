@@ -27,9 +27,9 @@ public class Variable {
 
 	public void genC(PW pw) {
             if(tipo.equals("string"))
-                pw.out.println("strcpy("+name + " ,\" " + value + "\");");
+                pw.println("strcpy("+name + " ,\" " + value + "\");");
             else
-				pw.out.println(name + " = " + value + ";");
+				pw.println(name + " = " + value + ";");
 	}
 
     	private String name;

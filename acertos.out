@@ -1,0 +1,56 @@
+
+acertoLexico1
+Hello, world!
+
+acertoLexico2
+Hello, world!
+
+acertoLexico3
+Hello, world!
+acertoLexico4
+
+acertoSintatico1
+Hello, world!
+
+acertoSintatico2
+Hello, world!
+
+acertoSintatico3
+sum = 30
+
+acertoSintatico4
+Negative changed to zero.
+
+acertoSintatico5
+This generation has 1 babies.
+This generation has 2 babies.
+This generation has 4 babies.
+Final 8.
+
+acertoSintatico6
+Testing the for loop:
+5	6	7	8	9	10	11	12	13	14	
+10	Diferente de 6	9	Diferente de 6	8	Diferente de 6	7	Diferente de 6	6	Diferente de 6	Diferente de 6	Diferente de 6	2	Diferente de 6	Diferente de 6	
+
+acertoSintatico7
+sum =32
+5
+
+acertoSintatico8
+i is not in the list: 10
+i is not in the list: 20
+i is not in the list: 50
+
+acertoSintatico9
+0
+
+acertoSintatico10
+1	0	1	
+acertoSintatico11
+52
+
+acertoSintatico12
+64
+
+acertoSintatico13
+Final Value: 85

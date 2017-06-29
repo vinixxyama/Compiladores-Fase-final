@@ -30,7 +30,6 @@ public class Compiler {
       if (lexer.token == Symbol.PROGRAM){
         lexer.nextToken();
         if(lexer.token == Symbol.IDENT){
-          System.out.print("asolasos");
           name();
         }else{
           error.signal("Falta o nome do programa");
@@ -105,18 +104,26 @@ public class Compiler {
     private ArrayList<ArgsList> argslist(){
       ArrayList<ArgsList> arl = new ArrayList<ArgsList>();
       ArgsList arg1 = null;
+      Declaration vini = null;
       NameArray nay = null;
       String tipopar = null;
+      ArrayList<String> yama = new ArrayList<String>();
+      int flagvirg = 0;
 
-      tipopar = type();  
+      tipopar = type();
       nay = namearray();
-      arg1 = new ArgsList(nay, tipopar);
+      yama.add(tipopar);
+      yama.add(nay.getvetname());
+      vini = new Declaration(yama);
+      decl.add(vini);
+      arg1 = new ArgsList(nay, tipopar, flagvirg);
       arl.add(arg1);
       while(lexer.token == Symbol.COMMA){
+        flagvirg = 1;
         lexer.nextToken();
         tipopar = type();  
         nay = namearray();
-        arg1 = new ArgsList(nay,tipopar);
+        arg1 = new ArgsList(nay,tipopar,flagvirg);
         arl.add(arg1);
       }
       return arl;
@@ -424,9 +431,15 @@ public class Compiler {
 
     private FuncStmt funcstmt(String varfunc){
       OrTest ort = null;
+      char op = '\0';
 
       if(lexer.token == Symbol.LEFTPAR){
         lexer.nextToken();
+        if(lexer.token == Symbol.MINUS || lexer.token == Symbol.PLUS){
+          op = lexer.getCharValue();
+          System.out.print("entrou");
+          lexer.nextToken();
+        }
         if(lexer.token == Symbol.IDENT || lexer.token == Symbol.NUMBER || lexer.token == Symbol.IBAR || lexer.token == Symbol.BOOLEAN){
           ort = ortest();
         }
@@ -437,7 +450,7 @@ public class Compiler {
       if(lexer.token == Symbol.SEMICOLON){
         lexer.nextToken();
       }
-      return new FuncStmt(varfunc, ort);
+      return new FuncStmt(op, varfunc, ort);
     }
 
     private ExprStmt exprStmt(String var){
@@ -454,12 +467,10 @@ public class Compiler {
       String tipo = null;
     	int i = 0, j = 0, w = 0, k = 0;
 
-    	if(lexer.token == Symbol.IDENT){
-    		varia.append(var);
-    		if(lexer.token == Symbol.LEFTBRACKETS){
-    			varia.append(exprList());
-	      }
-    	}
+  		varia.append(var);
+  		if(lexer.token == Symbol.LEFTBRACKETS){
+  			varia.append(exprList());
+      }
     	if(lexer.token == Symbol.ASSIGN){
     		lexer.nextToken();
     	}
@@ -507,7 +518,9 @@ public class Compiler {
                   while(lexer.token == Symbol.IDENT || lexer.token == Symbol.NUMBER || lexer.token == Symbol.IBAR || lexer.token == Symbol.BOOLEAN || lexer.token == Symbol.NOT){
                       or.add(ortest());
                   }
-	              }else{
+	              }else if(lexer.token == Symbol.NUMBER){
+                  System.out.print("teste");
+                }else{
 	              	//error valor imcompativel
 	              }
 	        		}
@@ -701,6 +714,29 @@ public class Compiler {
         if(lexer.token == Symbol.LEFTBRACKETS){
           str2.append(exprList());
           str = str2.toString();
+        }else if(lexer.token == Symbol.LEFTPAR){
+          lexer.nextToken();
+          str2.append("(");
+           while(lexer.token != Symbol.RIGHTPAR){
+            if(lexer.token == Symbol.IDENT){
+              str2.append(lexer.getNameVariable());
+              lexer.nextToken();
+            }else if(lexer.token == Symbol.NUMBER){
+              str2.append(lexer.getStringValue());
+              lexer.nextToken();
+              if(lexer.token != Symbol.COMMA && lexer.token != Symbol.RIGHTPAR){
+                error.signal("Falta , no vetor");
+              }
+            }else if(lexer.token == Symbol.COMMA){
+              str2.append(",");
+              lexer.nextToken();
+            }
+          }
+          if(lexer.token == Symbol.RIGHTPAR){
+            lexer.nextToken();
+            str2.append(")");
+          }
+          str = str2.toString();
         }
         at = new Atom(str, op, tipo);
       }else if(lexer.token == Symbol.NUMBER){
@@ -744,28 +780,28 @@ public class Compiler {
       String tok = null;
       if(lexer.token == Symbol.IBAR){
         lexer.nextToken();
-        while(lexer.token != Symbol.IBAR && lexer.token != Symbol.SEMICOLON){
-          if(lexer.token == Symbol.IDENT){
-            ident.append(lexer.getNameVariable());
-            ident.append(" ");
-            lexer.nextToken();
-          }else if(lexer.token == Symbol.NUMBER){
-            ident.append(lexer.getStringValue());
-            ident.append(" ");
-            lexer.nextToken();
-          }else{
-            ident.append(lexer.getNameVariable());
-            ident.append(" ");
-            lexer.nextToken();
-          }
-        }
-        tok = ident.toString();
-        if(lexer.token == Symbol.IBAR)
-          lexer.nextToken();
-        else{
-          error.signal("Falta fechar aspas no print");
-
-        }
+        //while(lexer.token != Symbol.IBAR && lexer.token != Symbol.SEMICOLON){
+          // if(lexer.token == Symbol.IDENT){
+          //   ident.append(lexer.getNameVariable());
+          //   ident.append(" ");
+          //   lexer.nextToken();
+          // }else if(lexer.token == Symbol.NUMBER){
+          //   ident.append(lexer.getStringValue());
+          //   ident.append(" ");
+          //   lexer.nextToken();
+          // }else{
+          //   ident.append(lexer.getNameVariable());
+          //   ident.append(" ");
+          //   lexer.nextToken();
+          // }
+        //}
+        tok = lexer.getNameVariable();
+        // tok = ident.toString();
+        // if(lexer.token == Symbol.IBAR)
+        //   lexer.nextToken();
+        // else{
+        //   error.signal("Falta fechar aspas no print");
+        // }
       }else{
         
       }

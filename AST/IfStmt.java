@@ -37,22 +37,26 @@ public class IfStmt{
 	public void genC(PW pw){
 		int j=0;
 		if(k == 'I'){
-			pw.out.print("if(");
+			pw.print("if(");
 			while(j < or.size()){
 				or.get(j).genC(pw);
 				j++;
 			}
 			j=0;
-			pw.out.print("){\n");
+			pw.out.println("){");
+			pw.add();
 			for(int i=0;i<st.size();i++){
 				st.get(i).genC(pw);
 			}
-			pw.out.print("\n}");
+			pw.sub();
+			pw.print("}");
 		}
 		if(el != null){
-			pw.out.print("else{\n");
+			pw.out.println("else{");
+			pw.add();
 			el.st2.genC(pw);
-			pw.out.print("\n}");
+			pw.sub();
+			pw.println("}");
 		}
 		if(k == 'L'){
 			for(int i=0;i<st.size();i++){

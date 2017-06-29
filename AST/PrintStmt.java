@@ -68,7 +68,7 @@ public class PrintStmt{
 		}
 		i = 0;
 		j = 0;
-		pw.out.print("printf(");
+		pw.print("printf(");
 		while(i<o.size()){
 			e = o.get(i).getand();
 			nt = e.getnot();
@@ -81,7 +81,7 @@ public class PrintStmt{
 			if(op == 'f'){
 				if(!strlist.isEmpty()){	
 					if(j < strlist.size()){
-						pw.out.print("\" "+strlist.get(j)+ "\"");
+						pw.out.print("\""+strlist.get(j)+ "\"");
 						j++;
 					}
 				}else{
@@ -94,7 +94,7 @@ public class PrintStmt{
 				i++;
 			}else{
 				if(strlist.get(0).equals("%d ") || strlist.get(0).equals("%s ") || strlist.get(0).equals("%f ")){
-					pw.out.print("\" "+strlist.get(j)+ "\",");
+					pw.out.print("\""+strlist.get(j)+ "\",");
 				}
 				pw.out.print(at.getstring());
 				if(o.get(i).getstring() != null){

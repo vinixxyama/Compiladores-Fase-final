@@ -11,5 +11,13 @@ public class ReturnStmt{
 		this.ort = ort;
 	}
 
+	public void genC(PW pw) {
+		pw.print("return");
+		if(ort != null){
+			pw.out.print(" ");
+			ort.genC(pw);
+		}
+		pw.out.println(";");
+	}
 	private OrTest ort;
 }

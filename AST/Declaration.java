@@ -18,22 +18,22 @@ public class Declaration {
 	public void genC(PW pw) {
 		int i=0;
 		if(deck.get(i).equals("int")){
-				pw.out.print(deck.get(i)+" ");
+				pw.print(deck.get(i)+" ");
 				i++;
 				pw.out.print(deck.get(i));
 				i++;
 			}else if(deck.get(i).equals("string")){
-				pw.out.print("char ");
+				pw.print("char ");
 				i++;
 				pw.out.print(deck.get(i)+"[40]");
 				i++;
 			}else if(deck.get(i).equals("float")){
-				pw.out.print(deck.get(i)+" ");
+				pw.print(deck.get(i)+" ");
 				i++;
 				pw.out.print(deck.get(i));
 				i++;
 			}else if(deck.get(i).equals("boolean")){
-				pw.out.print(deck.get(i)+" ");
+				pw.print(deck.get(i)+" ");
 				i++;
 				pw.out.print(deck.get(i));
 				i++;
