@@ -6,10 +6,11 @@ package AST;
 import java.util.ArrayList;
 
 public class Declaration {
-	public Declaration(ArrayList<String> deck) {
+	public Declaration(ArrayList<String> deck, int flag) {
 		if(deck != null){
 			this.deck = deck;
 		}
+		this.flag = flag;
 	}
 	public ArrayList<String> getArray(){
 		return deck;
@@ -17,7 +18,8 @@ public class Declaration {
 
 	public void genC(PW pw) {
 		int i=0;
-		if(deck.get(i).equals("int")){
+		if(flag != 1){
+			if(deck.get(i).equals("int")){
 				pw.print(deck.get(i)+" ");
 				i++;
 				pw.out.print(deck.get(i));
@@ -38,29 +40,31 @@ public class Declaration {
 				pw.out.print(deck.get(i));
 				i++;
 			}
-		while(i < deck.size()){
-			if(deck.get((i+1)%deck.size()) != null){
-				if(deck.get(i).equals("[")){
-					pw.out.print(deck.get(i));
-					i++;
-					pw.out.print(deck.get(i));
-					i++;
-					pw.out.print(deck.get(i));
-					i++;
-				}else{
-					pw.out.print(", ");
-					if(deck.get(0).equals("string")){
-						pw.out.print(deck.get(i)+"[40]");
-					}else{
+			while(i < deck.size()){
+				if(deck.get((i+1)%deck.size()) != null){
+					if(deck.get(i).equals("[")){
 						pw.out.print(deck.get(i));
+						i++;
+						pw.out.print(deck.get(i));
+						i++;
+						pw.out.print(deck.get(i));
+						i++;
+					}else{
+						pw.out.print(", ");
+						if(deck.get(0).equals("string")){
+							pw.out.print(deck.get(i)+"[40]");
+						}else{
+							pw.out.print(deck.get(i));
+						}
+						i++;
 					}
-					i++;
+				}else{
 				}
-			}else{
 			}
+			pw.out.println(";");
 		}
-		pw.out.println(";");
 	}
 
-	ArrayList<String> deck = new ArrayList<String>();
+	private ArrayList<String> deck = new ArrayList<String>();
+	private int flag;
 }

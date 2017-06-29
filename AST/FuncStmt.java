@@ -7,24 +7,23 @@ package AST;
 import java.util.*;
 
 public class FuncStmt{
-	public FuncStmt(char op, String funcvar, OrTest ort){
+	public FuncStmt(String funcvar, ArrayList<OrTest> ort){
 		this.funcvar = funcvar;
 		this.ort = ort;
-		this.op = op;
 	}
 
 	public void genC(PW pw) {
+		int i = 0;
 		pw.print(funcvar+"(");
-		if(op != '\0'){
-			pw.out.print(op);
-			ort.genC(pw);
-		}else{
-			ort.genC(pw);
+		ort.get(i).genC(pw);
+		i++;
+		while(i < ort.size()){
+			ort.get(i).genC(pw);
+			i++;
 		}
 		pw.out.println(");");
 	}
 
-	private char op;
 	private String funcvar;
-	private OrTest ort;
+	private ArrayList<OrTest> ort;
 }

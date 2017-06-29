@@ -267,12 +267,14 @@ public class Lexer {
                           System.out.print(input[tokenPos]);
                           ident.append(input[tokenPos]);
                           tokenPos++;
+                          if(input[tokenPos] == ';' || input[tokenPos] == ')'){
+                            break;
+                          }
                         }
                         if(input[tokenPos] == '\''){
                           tokenPos++;
                         }
                         nameVariable = ident.toString();
-                        System.out.println("UE:"+nameVariable);
                       break;
                     case '\\':
                         token = Symbol.IDENT;

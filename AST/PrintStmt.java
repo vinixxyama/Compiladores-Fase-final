@@ -96,7 +96,7 @@ public class PrintStmt{
 				if(strlist.get(0).equals("%d ") || strlist.get(0).equals("%s ") || strlist.get(0).equals("%f ")){
 					pw.out.print("\""+strlist.get(j)+ "\",");
 				}
-				pw.out.print(at.getstring());
+				ex.genC(pw);
 				if(o.get(i).getstring() != null){
 					pw.out.print(",");
 				}
