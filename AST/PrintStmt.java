@@ -30,7 +30,8 @@ public class PrintStmt{
 			ex = co.getexpr();
 			t = ex.getterm();
 			f = t.getfactor();
-			at = f.getatom();
+			atex = f.getatomexpr();
+			at = atex.getatom();
 			op = at.getchar();
 			tipo = at.gettipo();
 
@@ -76,7 +77,8 @@ public class PrintStmt{
 			ex = co.getexpr();
 			t = ex.getterm();
 			f = t.getfactor();
-			at = f.getatom();
+			atex = f.getatomexpr();
+			at = atex.getatom();
 			op = at.getchar();
 			if(op == 'f'){
 				if(!strlist.isEmpty()){	
@@ -114,5 +116,6 @@ public class PrintStmt{
 	private Term t;
 	private Factor f;
 	private Atom at;
+	private AtomExpr atex;
 
 }

@@ -6,12 +6,12 @@ void main(){
 
    i = 10;
    counter = 0;
-   alist = [20,30,40,90,50,60,70,80,100,110];
+   alist = null;
    while(i<= 110){
-      if(alist[counter]== i){
-         printf("i is in the list : %d ",i,"\n ");
+      if(alist      [      counter]== i){
+         printf("i is in the list: %d ",i,"\n");
       }else{
-         printf("i is not in the list : %d ",i,"\n ");
+         printf("i is not in the list: %d ",i,"\n");
       }
       i = i*3-10;
       counter = counter+1;

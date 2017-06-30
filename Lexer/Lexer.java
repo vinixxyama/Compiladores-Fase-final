@@ -263,9 +263,10 @@ public class Lexer {
                       break;
                     case '\'' :
                         token = Symbol.IBAR;
+                        StringBuffer ident2 = new StringBuffer();
                         while(input[tokenPos] != '\''){
                           System.out.print(input[tokenPos]);
-                          ident.append(input[tokenPos]);
+                          ident2.append(input[tokenPos]);
                           tokenPos++;
                           if(input[tokenPos] == ';' || input[tokenPos] == ')'){
                             break;
@@ -274,7 +275,7 @@ public class Lexer {
                         if(input[tokenPos] == '\''){
                           tokenPos++;
                         }
-                        nameVariable = ident.toString();
+                        nameVariable = ident2.toString();
                       break;
                     case '\\':
                         token = Symbol.IDENT;

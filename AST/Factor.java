@@ -6,24 +6,24 @@ package AST;
 import java.util.ArrayList;
 
 public class Factor{
-	public Factor(Atom at, char op){
-		this.at = at;
+	public Factor(AtomExpr atex, char op){
+		this.atex = atex;
 		this.op = op;
 	}
 
-	public Atom getatom(){
-		return at;
+	public AtomExpr getatomexpr(){
+		return atex;
 	}
 
 	public void genC(PW pw){
 		if(op != '\0'){
 			pw.out.print(op);
-			at.genC(pw);
+			atex.genC(pw);
 		}else{
-			at.genC(pw);
+			atex.genC(pw);
 		}
     }
 
-	private Atom at;
+	private AtomExpr atex;
 	private char op;
 }
