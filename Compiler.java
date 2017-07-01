@@ -345,11 +345,11 @@ public class Compiler {
         lexer.nextToken();
         if(lexer.token == Symbol.LEFTPAR){
             lexer.nextToken();
-            if(lexer.token == Symbol.NUMBER){
+            if(lexer.token == Symbol.NUMBER ||lexer.token == Symbol.MINUS){
                 nb1 = numbers();
                 if(lexer.token == Symbol.COMMA){
                     lexer.nextToken();
-                    if(lexer.token == Symbol.NUMBER){
+                    if(lexer.token == Symbol.NUMBER||lexer.token == Symbol.MINUS ){
                         nb2 = numbers();
                         if(lexer.token == Symbol.RIGHTPAR){
                             lexer.nextToken();
