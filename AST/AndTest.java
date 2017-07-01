@@ -18,7 +18,7 @@ public class AndTest{
 		int i=0;
 		if(str != null){
 			nt.genC(pw);
-			pw.out.print(str);
+			pw.out.print(" "+str+" ");
 			i++;
 		}else{
 			nt.genC(pw);

@@ -20,15 +20,15 @@ public class Details{
 
 	public void genC(PW pw){
 		if(flag == 0){
-			pw.print("[");
+			pw.out.print("[");
 			if(ns != null){
 				ns.genC(pw);
 			}else{
-				pw.print(sl);
+				pw.out.print(sl);
 			}
 			pw.out.print("]");
 		}else{
-			pw.print("(");
+			pw.out.print("(");
 			auxlist.genC(pw);
 			pw.out.print(")");
 		}

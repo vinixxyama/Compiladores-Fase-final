@@ -15,7 +15,7 @@ int babiesValue(int p, int babies){
 void main(){
    int babies;
 
-   babies = babiesValue   (   [,1]);
+   babies = babiesValue(1,1);
    printf("Final %d ",babies,".\n");
    return;
 }

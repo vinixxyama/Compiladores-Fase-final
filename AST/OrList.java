@@ -15,9 +15,6 @@ public class OrList{
 		while(i < ortlist.size()){
 			ortlist.get(i).genC(pw);
 			i++;
-			if(i < ortlist.size()-1){
-				pw.out.print(", ");
-			}
 		}
 	}
 

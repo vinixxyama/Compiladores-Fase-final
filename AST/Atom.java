@@ -35,7 +35,7 @@ public class Atom {
 		}else if(op == 'n'){
 			pw.out.print(str);
 		}else if(op == 'f'){
-			pw.out.print(str);
+			pw.out.print("\""+str+"\"");
 		}
 	}
 

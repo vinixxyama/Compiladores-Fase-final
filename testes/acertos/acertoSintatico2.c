@@ -11,10 +11,10 @@ void main(){
    float x;
    char c[40], d[40];
 
-   a = aValue   (   []);
+   a = aValue();
    x = 31.23456;
-   strcpy(c ," !");
-   strcpy(d ," Ola Mundo");
+strcpy(c ,""!"");
+strcpy(d ,""Ola Mundo"");
    printf("Hello, world%s ",c,"\n");
    return;
 }

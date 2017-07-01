@@ -8,6 +8,6 @@ int vetPlay(int a){
 
 void main(){
 
-   printf("Final Value: %d ",vetPlay   (   [17])*5,"\n");
+   printf("Final Value: %d ",vetPlay(17)*5,"\n");
    return;
 }

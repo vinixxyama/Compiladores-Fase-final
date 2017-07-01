@@ -6,8 +6,9 @@ package AST;
 import java.util.ArrayList;
 
 public class Factor{
-	public Factor(AtomExpr atex, char op){
+	public Factor(AtomExpr atex, char pm, char op){
 		this.atex = atex;
+		this.pm = pm;
 		this.op = op;
 	}
 
@@ -17,13 +18,26 @@ public class Factor{
 
 	public void genC(PW pw){
 		if(op != '\0'){
-			pw.out.print(op);
-			atex.genC(pw);
+			if(pm != '\0'){
+				pw.out.print(pm);
+				atex.genC(pw);
+				pw.out.print(op);
+			}else{
+				atex.genC(pw);
+				pw.out.print(op);
+			}
+
 		}else{
-			atex.genC(pw);
+			if(pm != '\0'){
+				pw.out.print(pm);
+				atex.genC(pw);
+			}else{
+				atex.genC(pw);
+			}
 		}
     }
 
+    private char op;
 	private AtomExpr atex;
-	private char op;
+	private char pm;
 }

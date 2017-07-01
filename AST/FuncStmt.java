@@ -15,8 +15,6 @@ public class FuncStmt{
 	public void genC(PW pw) {
 		int i = 0;
 		pw.print(funcvar+"(");
-		ort.get(i).genC(pw);
-		i++;
 		while(i < ort.size()){
 			ort.get(i).genC(pw);
 			i++;

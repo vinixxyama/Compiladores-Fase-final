@@ -328,8 +328,8 @@ public class Compiler {
     private ForStmt forstmt(){
       ForStmt fo = null;
       String str = null;
-      int nb1 ;
-      int nb2 ;
+      Numbers nb1 = null;
+      Numbers nb2 = null;
       ArrayList<Stmt> st = new ArrayList<Stmt>(); 
       char tk = ' ';
       tk = 'F';
@@ -346,13 +346,11 @@ public class Compiler {
         if(lexer.token == Symbol.LEFTPAR){
             lexer.nextToken();
             if(lexer.token == Symbol.NUMBER){
-                nb1 = lexer.getNumberValue();
-                lexer.nextToken();
+                nb1 = numbers();
                 if(lexer.token == Symbol.COMMA){
                     lexer.nextToken();
                     if(lexer.token == Symbol.NUMBER){
-                        nb2 = lexer.getNumberValue();
-                        lexer.nextToken();
+                        nb2 = numbers();
                         if(lexer.token == Symbol.RIGHTPAR){
                             lexer.nextToken();
                             if(lexer.token == Symbol.LEFTBRACES){
@@ -367,7 +365,7 @@ public class Compiler {
                             if(lexer.token != Symbol.RIGHTBRACES){ //error
                             }else{
                                 lexer.nextToken();
-                                fo = new ForStmt(tk, st, str,nb1,nb2);
+                                fo = new ForStmt(tk, st, str, nb1, nb2);
                             }
                         }
                     }else{
@@ -458,19 +456,13 @@ public class Compiler {
     	ExprStmt exp = null;
     	ExprStmt aux = null;
     	Numbers aux2 = null;
-    	Variable v = null;
       Atom at = null;
       OrList auxlist = null;
     	ArrayList<OrTest> or = new ArrayList<OrTest>();
     	ArrayList<String> strg = new ArrayList<String>();
-    	StringBuffer varia = new StringBuffer();
-    	StringBuffer valor = new StringBuffer();
-    	String var2 = null;
-    	String val = null;
-      String tipo = null;
+      ArrayList<String> tipo = new ArrayList<String>();
     	int i = 0, j = 0, w = 0, k = 0;
 
-  		varia.append(var);
   		if(lexer.token == Symbol.LEFTBRACKETS){
         lexer.nextToken();
         if(lexer.token == Symbol.IBAR || lexer.token == Symbol.TRUE || lexer.token == Symbol.FALSE ||lexer.token == Symbol.IDENT || lexer.token == Symbol.NUMBER){
@@ -483,47 +475,28 @@ public class Compiler {
     	if(lexer.token == Symbol.ASSIGN){
     		lexer.nextToken();
     	}
-    	if(lexer.token == Symbol.IBAR || lexer.token == Symbol.TRUE || lexer.token == Symbol.FALSE ||lexer.token == Symbol.IDENT || lexer.token == Symbol.NUMBER || lexer.token == Symbol.MINUS || lexer.token == Symbol.PLUS){
-      	if(lexer.token == Symbol.MINUS || lexer.token == Symbol.PLUS){
-        	valor.append(lexer.getCharValue());
-        	lexer.nextToken();
-        }
-      	while(lexer.token == Symbol.IDENT || lexer.token == Symbol.NUMBER || lexer.token == Symbol.IBAR || lexer.token == Symbol.TRUE || lexer.token == Symbol.FALSE){
+    	if(lexer.token == Symbol.IBAR || lexer.token == Symbol.TRUE || lexer.token == Symbol.FALSE ||lexer.token == Symbol.IDENT || lexer.token == Symbol.NUMBER || lexer.token == Symbol.MINUS || lexer.token == Symbol.PLUS || lexer.token == Symbol.NOT){
+      	while(lexer.token == Symbol.IDENT || lexer.token == Symbol.NUMBER || lexer.token == Symbol.IBAR || lexer.token == Symbol.MINUS || lexer.token == Symbol.PLUS || lexer.token == Symbol.TRUE || lexer.token == Symbol.FALSE || lexer.token == Symbol.NOT){
           for(i = 0;i<decl.size();i++){
 	          strg = decl.get(i).getArray();
 	          for(j=0;j<strg.size();j++){
 	            if(var.equals(strg.get(j))){
 	              if(lexer.token == Symbol.NUMBER && strg.get(0).equals("int")){
-	                aux2 = numbers();
-	                valor.append(aux2.getReal());
-                  tipo = strg.get(0);
-                  if(lexer.token == Symbol.EXPONENCIAL){
-                    valor.append("^");
-                    lexer.nextToken();
-                  }
+	                or.add(ortest());
+                  tipo.add(strg.get(0));
 	              }else if(lexer.token == Symbol.IBAR && strg.get(0).equals("string")){
-	                valor.append(string());
-                  tipo = strg.get(0);
+	                or.add(ortest());
+                  tipo.add(strg.get(0));
 	              }else if(lexer.token == Symbol.NUMBER && strg.get(0).equals("float")){
-	              	aux2 = numbers();
-	                valor.append(aux2.getReal());
-                  if(lexer.token == Symbol.EXPONENCIAL){
-                    valor.append("^");
-                    lexer.nextToken();
-                  }
-                  tipo = strg.get(0);
+	              	or.add(ortest());
+                  tipo.add(strg.get(0));
 	              }else if((lexer.token == Symbol.TRUE || lexer.token == Symbol.FALSE) && strg.get(0).equals("boolean")){
-	              	if(lexer.token == Symbol.TRUE){
-                    valor.append("true");
-                  }else if(lexer.token == Symbol.FALSE){
-                    valor.append("false");
-                  }
-                  lexer.nextToken();
-                  tipo = strg.get(0);
-	              }else if(lexer.token == Symbol.IDENT || lexer.token == Symbol.TRUE || lexer.token == Symbol.FALSE){
-                  while(lexer.token == Symbol.IDENT || lexer.token == Symbol.NUMBER || lexer.token == Symbol.IBAR || lexer.token == Symbol.NOT || lexer.token == Symbol.TRUE || lexer.token == Symbol.FALSE){
-                      
+	              	or.add(ortest());
+                  tipo.add(strg.get(0));
+	              }else if(lexer.token == Symbol.IDENT || lexer.token == Symbol.TRUE || lexer.token == Symbol.FALSE || lexer.token == Symbol.MINUS || lexer.token == Symbol.PLUS || lexer.token == Symbol.NOT){
+                  while(lexer.token == Symbol.IDENT || lexer.token == Symbol.NUMBER || lexer.token == Symbol.IBAR || lexer.token == Symbol.NOT || lexer.token == Symbol.TRUE || lexer.token == Symbol.FALSE || lexer.token == Symbol.MINUS || lexer.token == Symbol.PLUS){
                       or.add(ortest());
+                      tipo.add("var");
                   }
 	              }else{
 	              	//error valor imcompativel
@@ -532,17 +505,14 @@ public class Compiler {
 	        	}
         	}
       	}
-        var = varia.toString();
-        val = valor.toString();
-        v = new Variable(at, var, val, tipo);
-        exp = new ExprStmt(v, or);
+        // val = valor.toString();
+        // v = new Variable(at, var, val, tipo);
+        exp = new ExprStmt(var, at, or, tipo, auxlist);
       }else if(lexer.token == Symbol.LEFTBRACKETS){
         lexer.nextToken();
-        tipo = "vetor";
+        tipo.add("vetor");
         auxlist = orlist();
-        var = varia.toString();
-        v = new Variable(auxlist, at, var, tipo);
-        exp = new ExprStmt(v, or);
+        exp = new ExprStmt(var, at, or, tipo, auxlist);
       }else{
         error.signal("Falta valor depois de =");
       }
@@ -672,6 +642,7 @@ public class Compiler {
       Factor f = null;
       AtomExpr atex = null;
       char ch = '\0';
+      char op = '\0';
 
       if(lexer.token == Symbol.PLUS || lexer.token == Symbol.MINUS){
         ch = lexer.getCharValue();
@@ -681,8 +652,12 @@ public class Compiler {
       if(lexer.token == Symbol.IDENT || lexer.token == Symbol.NUMBER || lexer.token == Symbol.IBAR || lexer.token == Symbol.TRUE || lexer.token == Symbol.FALSE){
         atex = atomexpr();
       }
+      if(lexer.token == Symbol.EXPONENCIAL){
+        op = '^';
+        lexer.nextToken();
+      }
 
-      f = new Factor(atex, ch);
+      f = new Factor(atex, ch, op);
       return f;
     }
 
@@ -694,6 +669,7 @@ public class Compiler {
       if(lexer.token == Symbol.LEFTPAR || lexer.token == Symbol.LEFTBRACKETS){
         det = details();
       }
+
       return new AtomExpr(at, det);
     }
 

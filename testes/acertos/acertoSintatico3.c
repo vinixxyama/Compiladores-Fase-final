@@ -16,8 +16,8 @@ void main(){
    a = 9;
    b = 5;
    c = 4;
-   d = null;
-   t = tValue   (   [,, ,c]);
+   d = [1,2,3];
+   t = tValue(a,b,c);
    printf("sum = %d ",t,"\n");
    return;
 }

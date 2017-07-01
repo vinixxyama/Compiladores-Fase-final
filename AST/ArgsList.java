@@ -24,7 +24,13 @@ public class ArgsList{
 			pw.out.print(tipopar + " ");
 			nay.genC(pw);
 		}else{
-			pw.out.print(", " + tipopar + " ");
+			if(tipopar.equals("boolean")){
+				pw.out.print(", " + "bool" + " ");
+			}else if(tipopar.equals("string")){
+				pw.out.print(", " + "char[40]" + " ");
+			}else{
+				pw.out.print(", " + tipopar + " ");
+			}
 			nay.genC(pw);
 		}
 	}

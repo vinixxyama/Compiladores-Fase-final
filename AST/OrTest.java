@@ -25,10 +25,11 @@ public class OrTest{
 	public void genC(PW pw){
 		if(str != null){
 			if(str.equals(",")){
+				e.genC(pw);
 				pw.out.print(str);
 			}else{
 				e.genC(pw);
-				pw.out.print(str);
+				pw.out.print(" "+str+ " ");
 			}
 		}else{
 			e.genC(pw);

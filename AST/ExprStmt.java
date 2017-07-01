@@ -6,26 +6,44 @@ package AST;
 import java.util.ArrayList;
 
 public class ExprStmt {
- 	public ExprStmt(Variable var, ArrayList<OrTest> or){
-		if(or != null){
-			this.or = or;
-		}
+ 	public ExprStmt(String var, Atom at, ArrayList<OrTest> or, ArrayList<String> tipo, OrList auxlist){
+		this.or = or;
     	this.var = var;
+    	this.tipo = tipo;
+    	this.at = at;
+    	this.auxlist = auxlist;
 	}
 
 	public void genC(PW pw){
 		int i=0;
-		if(or.isEmpty()){
-			var.genC(pw);
-		}else{
-			pw.print(var.getname()+" = ");
-			while(i < or.size()){
-				or.get(i).genC(pw);
-				i++;
+		if(tipo.get(i).equals("string")){
+            pw.out.print("strcpy("+var + " ,\"");
+            or.get(i).genC(pw);
+            pw.out.print("\")");
+            i++;
+        }else{
+			pw.print(var);
+			if(at != null){
+				at.genC(pw);
 			}
-			pw.out.println(";");
+			pw.out.print(" = ");
+			if(auxlist == null){
+				while(i<or.size()){
+					or.get(i).genC(pw);
+					i++;
+				}
+			}else{
+				pw.out.print("[");
+				auxlist.genC(pw);
+				pw.out.print("]");
+			}
 		}
+		pw.out.println(";");
     }
-	private Variable var;
+
+	private String var;
+	private ArrayList<String> tipo;
+	private Atom at;
 	private ArrayList<OrTest> or;
+	private OrList auxlist;
 }
