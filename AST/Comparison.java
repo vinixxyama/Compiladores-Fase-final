@@ -21,7 +21,7 @@ public class Comparison{
 			ex.genC(pw);
 		}else{
 			ex.genC(pw);
-			pw.out.print(str+" ");
+			pw.out.print(" "+str+" ");
 		}
 	}
 
