@@ -17,9 +17,9 @@ public class ExprStmt {
 	public void genC(PW pw){
 		int i=0;
 		if(tipo.get(i).equals("string")){
-            pw.out.print("strcpy("+var + " ,\"");
+            pw.out.print("strcpy("+var + " ,");
             or.get(i).genC(pw);
-            pw.out.print("\")");
+            pw.out.print(")");
             i++;
         }else{
 			pw.print(var);
