@@ -17,9 +17,11 @@ void for2(){
 for(var2=10;var2>0;var2--){
    if(var2== 2 || var2> 5){
       printf(var2,"%d \t");
-   }   if(var2<> 6){
+   }
+   if(var2!= 6){
       printf("Diferente de 6\t");
    }
+
 }   printf("\n");
    return;
 }

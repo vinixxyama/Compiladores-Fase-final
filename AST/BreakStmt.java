@@ -10,7 +10,7 @@ public class BreakStmt{
 	}
 
 	public void genC(PW pw){
-		pw.out.print("\rbreak;");
+		pw.println("break;");
 	}
 
 	char tk;

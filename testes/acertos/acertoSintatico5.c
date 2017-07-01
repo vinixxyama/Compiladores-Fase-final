@@ -8,7 +8,9 @@ int babiesValue(int p, int babies){
       p = babies;
       babies = p+babies;
       if(babies== 8){
-break;      }   }
+         break;
+      }
+   }
    return babies;
 }
 

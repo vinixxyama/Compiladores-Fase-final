@@ -24,7 +24,9 @@ public class ExprStmt {
         }else{
 			pw.print(var);
 			if(at != null){
+				pw.out.print("[");
 				at.genC(pw);
+				pw.out.print("]");
 			}
 			pw.out.print(" = ");
 			if(auxlist == null){

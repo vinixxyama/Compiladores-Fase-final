@@ -49,7 +49,7 @@ public class IfStmt{
 				st.get(i).genC(pw);
 			}
 			pw.sub();
-			pw.print("}");
+			pw.println("}");
 		}
 		if(el != null){
 			pw.out.println("else{");

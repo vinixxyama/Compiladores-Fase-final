@@ -168,6 +168,7 @@ public class Lexer {
                       charValue = ch;
                       break;
                     case '<' :
+                      StringBuffer ident3 = new StringBuffer();
                       if ( input[tokenPos] == '=' ) {
                         ident.append(input[tokenPos]);
                         tokenPos++;
@@ -175,10 +176,10 @@ public class Lexer {
                         nameVariable = ident.toString();
                         token = Symbol.LE;
                       }else if(input[tokenPos] == '>' ){
-                        ident.append(input[tokenPos]);
+                        ident3.append("!=");
                         tokenPos++;
                         System.out.print("> ");
-                        nameVariable = ident.toString();
+                        nameVariable = ident3.toString();
                         token = Symbol.LTGT;
                       }else{
                         if(input[tokenPos+1] == '=')

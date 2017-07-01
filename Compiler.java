@@ -465,7 +465,7 @@ public class Compiler {
 
   		if(lexer.token == Symbol.LEFTBRACKETS){
         lexer.nextToken();
-        if(lexer.token == Symbol.IBAR || lexer.token == Symbol.TRUE || lexer.token == Symbol.FALSE ||lexer.token == Symbol.IDENT || lexer.token == Symbol.NUMBER){
+        if(lexer.token == Symbol.IBAR || lexer.token == Symbol.TRUE || lexer.token == Symbol.FALSE || lexer.token == Symbol.IDENT || lexer.token == Symbol.NUMBER){
           at = atom();
         }
         if(lexer.token == Symbol.RIGHTBRACKETS){
