@@ -736,9 +736,9 @@ public class Compiler {
       }else if(lexer.token == Symbol.TRUE || lexer.token == Symbol.FALSE){
         op = 'b';
         if(lexer.token == Symbol.TRUE){
-          str = "true";
+          str = "1";
         }else if(lexer.token == Symbol.FALSE){
-          str = "false";
+          str = "0";
         }
         at = new Atom(str, op, "boolean");
         lexer.nextToken();
