@@ -35,7 +35,7 @@ public class Declaration {
 				pw.out.print(deck.get(i));
 				i++;
 			}else if(deck.get(i).equals("boolean")){
-				pw.print("bool"+" ");
+				pw.print("int"+" ");
 				i++;
 				pw.out.print(deck.get(i));
 				i++;

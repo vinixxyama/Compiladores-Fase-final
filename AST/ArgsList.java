@@ -25,7 +25,7 @@ public class ArgsList{
 			nay.genC(pw);
 		}else{
 			if(tipopar.equals("boolean")){
-				pw.out.print(", " + "bool" + " ");
+				pw.out.print(", " + "int" + " ");
 			}else if(tipopar.equals("string")){
 				pw.out.print(", " + "char[40]" + " ");
 			}else{

@@ -38,7 +38,7 @@ public class PrintStmt{
 			if(op == 'v'){
 				if(tipo.equals("string")){
 					aux.append("%s ");
-				}else if(tipo.equals("int")){
+				}else if(tipo.equals("int") || tipo.equals("boolean")){
 					aux.append("%d ");
 				}else if(tipo.equals("float")){
 					aux.append("%f ");
