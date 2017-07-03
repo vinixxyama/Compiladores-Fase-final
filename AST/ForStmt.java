@@ -19,7 +19,7 @@ public class ForStmt {
         this.nb2 = nb2;
 	}
     public void genC(PW pw){
-		pw.out.print("for(");       
+		pw.print("for(");       
         pw.out.print(var);
  	    pw.out.print("=");
         nb1.genC(pw);
@@ -44,11 +44,13 @@ public class ForStmt {
             pw.out.print("--");
         }
                 
-		pw.out.print("){\n");
+		pw.out.println("){");
+        pw.add();
 		for(int i=0; i<st.size();i++){
 			st.get(i).genC(pw);
 		}
-		pw.out.print("\n}");
+        pw.sub();
+		pw.println("}");
 	}
 
 

@@ -45,31 +45,14 @@ public class PrintStmt{
 				}
 			}
 			if(op == 'f'){
-				if(flag == 1){
-					flag = 0;
-					sent = aux.toString();
-					strlist.add(sent);
-					aux = new StringBuffer();
-				}
-				if(flag == 0){
-					flag = 1;
-					frase = at.getstring();
-					aux.append(frase);
-				}
+				aux.append(at.getstring());
 			}
 			i++;
-			if(flag == 1 && i >= o.size()){
-				flag = 0;
-				sent = aux.toString();
-				strlist.add(sent);
-			}else if(flag == 0 && i >= o.size()){
-				sent = aux.toString();
-				strlist.add(sent);
-			}
 		}
+		frase = aux.toString();
 		i = 0;
 		j = 0;
-		pw.print("printf(");
+		pw.print("printf(\"" + frase +"\"");
 		while(i<o.size()){
 			e = o.get(i).getand();
 			nt = e.getnot();
@@ -80,30 +63,12 @@ public class PrintStmt{
 			atex = f.getatomexpr();
 			at = atex.getatom();
 			op = at.getchar();
-			if(op == 'f'){
-				if(!strlist.isEmpty()){	
-					if(j < strlist.size()){
-						pw.out.print("\""+strlist.get(j)+ "\"");
-						j++;
-					}
-				}else{
-					pw.out.print("\""+aux.toString()+"\"");
-				}
-				aux2 = o.get(i).getstring();
-				if(aux2!= null){
-					pw.out.print(",");
-				}
-				i++;
-			}else{
-				if(strlist.get(0).equals("%d ") || strlist.get(0).equals("%s ") || strlist.get(0).equals("%f ")){
-					pw.out.print("\""+strlist.get(j)+ "\",");
-				}
-				ex.genC(pw);
-				if(o.get(i).getstring() != null){
-					pw.out.print(",");
-				}
-				i++;
+			if(op == 'v'){
+				pw.out.print(",");
+				e.genC(pw);
 			}
+
+			i++;
 		}
 		pw.out.println(");");
 	}

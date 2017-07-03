@@ -2,10 +2,10 @@
 #include <string.h>
 
 void main(){
-   bool true;
+   int true;
 
-   true = true || false && false;
+   true = 1 || 0 && 0;
    true = !true;
-   printf(true,"\n");
+   printf("%d \n",true);
    return;
 }
